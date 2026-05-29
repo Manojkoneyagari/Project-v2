@@ -63,12 +63,22 @@ echo -e " ${Y} Proceeding with Nodejs Installation ${N}"
     sudo apt install unzip -y &>> $LOGFILE
     Validate $? "Updating and installing nodejs application and unzip"
 
-    sudo mkdir /app
-    sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-    cd /app 
-    sudo unzip /tmp/catalogue.zip
+    cd /app
+        if [ $? -eq 0 ]; then
+            echo " Directory already exist, so removing the old code"
+            sudo rm -rf /app
+            Validate $? "Removed Directory"
+        else
+            echo " Directory not exists, creating directory and downloading code"
+            sudo mkdir /app
+            sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+            cd /app 
+            sudo unzip /tmp/catalogue.zip
+            Validate $? "Created Directory and Downloaded code"
+        fi
+    
     sudo npm install &>> $LOGFILE
-    Validate $? "Downloading code and installing dependencies"
+    Validate $? "Installing dependencies"
 
     cp $SCRIPT_DIR/catalogue.service /etc/systemd/system/catalogue.service
     Validate $? "Creating Systemctl service"
@@ -76,11 +86,18 @@ echo -e " ${Y} Proceeding with Nodejs Installation ${N}"
    
 
 echo -e " ${Y} Proceeding with Mongodb Installation ${N}"
-     
-    sudo curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
-    sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
-    --dearmor &>> $LOGFILE
-    Validate $? "Adding mongodb gpg keys"
+
+
+
+    if [ -f /usr/share/keyrings/mongodb-server-7.0.gpg ]; then
+        echo "File already exists"
+    else
+        sudo curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+        sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
+        --dearmor &>> $LOGFILE
+        Validate $? "Adding mongodb gpg keys"
+    fi
+    
 
     
     echo "deb [ arch=amd64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | \
@@ -88,7 +105,7 @@ echo -e " ${Y} Proceeding with Mongodb Installation ${N}"
     Validate $? "Adding repository"
 
     sudo apt update -y &>> $LOGFILE
-    sudo apt install -y mongodb-mongosh
+    sudo apt install -y mongodb-mongosh &>> $LOGFILE
     Validate $? "Installing mongodb client"
 
 
