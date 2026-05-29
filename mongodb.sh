@@ -41,7 +41,7 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
 #Import key
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
-sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg &>> $LOGFILE
+gpg --dearmor | sudo tee /usr/share/keyrings/mongodb-server-7.0.gpg &>> $LOGFILE
 Validate $? "Adding mongodb gpg keys"
 
 #adding repo
@@ -53,12 +53,13 @@ sudo apt update -y &>> $LOGFILE
 sudo apt install -y mongodb-org &>> $LOGFILE
 Validate $? "Updating and installing mongodb application"
 
-sudo systemctl enable mongod
-sudo systemctl start mongod
-Validate $? "Starting and enabling the mongodb service"
 
 sudo sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 Validate $? "Changes in systemdfile to allow all traffic"
+
+sudo systemctl enable mongod
+sudo systemctl start mongod
+Validate $? "Starting and enabling the mongodb service"
 
 sudo systemctl restart mongod
 Validate $? "Restarting systemd service"
