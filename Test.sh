@@ -9,4 +9,4 @@ echo " $? Permissions succesfully"
 echo $0
 SCRIPT_NAME=$(basename "$0")
 echo "$SCRIPT_NAME"
-LOGFILE="$LOG_DIR/$SCRIPT_NAME.log"
+LOGFILE="$LOG_DIR/${SCRIPT_NAME}.log"
