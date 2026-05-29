@@ -15,6 +15,7 @@ SCRIPT_NAME=$(basename "$0")
 echo -e "${Y}....$SCRIPT_NAME ${N}"
 LOGFILE="$LOG_DIR/${SCRIPT_NAME}.log"
 SCRIPT_DIR=$PWD
+appname=user
 
 USERID=$(id -u)
 Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
@@ -69,18 +70,18 @@ echo -e " ${Y} Proceeding with Nodejs Installation ${N}"
 
     echo " Directory not exists, creating directory and downloading code"
     sudo mkdir /app
-    sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+    sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
     cd /app 
-    sudo unzip /tmp/catalogue.zip
+    sudo unzip /tmp/$appname.zip
     Validate $? "Created Directory and Downloaded code"
     
     sudo npm install &>> $LOGFILE
     Validate $? "Installing dependencies"
 
-    cp $SCRIPT_DIR/user.service /etc/systemd/system/user.service
+    cp $SCRIPT_DIR/$appname.service /etc/systemd/system/$appname.service
     Validate $? "Creating Systemctl service"
 
     sudo systemctl daemon-reload
-    sudo systemctl enable catalogue 
-    sudo systemctl start catalogue
-    Validate $? "Reload and start the catalogue service"
+    sudo systemctl enable $appname 
+    sudo systemctl start $appname
+    Validate $? "Reload and start the user service"
