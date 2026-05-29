@@ -68,14 +68,14 @@ echo -e " ${Y} Proceeding with Nodejs Installation ${N}"
             echo " Directory already exist, so removing the old code"
             sudo rm -rf /app
             Validate $? "Removed Directory"
-        else
-            echo " Directory not exists, creating directory and downloading code"
-            sudo mkdir /app
-            sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
-            cd /app 
-            sudo unzip /tmp/catalogue.zip
-            Validate $? "Created Directory and Downloaded code"
         fi
+
+    echo " Directory not exists, creating directory and downloading code"
+    sudo mkdir /app
+    sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip 
+    cd /app 
+    sudo unzip /tmp/catalogue.zip
+    Validate $? "Created Directory and Downloaded code"
     
     sudo npm install &>> $LOGFILE
     Validate $? "Installing dependencies"
