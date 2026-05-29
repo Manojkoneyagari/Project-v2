@@ -57,7 +57,7 @@ Validate $? "Adding nginx repo"
 
 
 sudo apt update -y &>> $LOGFILE
-sudo apt install -y nginx=1.24.*
+sudo apt install -y nginx &>> $LOGFILE
 Validate $? "Installing nginx 1.24 version"
 
 
@@ -69,7 +69,7 @@ cd /var/www/html
 sudo unzip /tmp/frontend.zip
 Validate $? "Downloading default html webpage"
 
-sudo vim /etc/nginx/sites-available/roboshop
+
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/sites-available/roboshop.conf
 Validate $? "Creating new config file instead of disturbing the original config"
 
