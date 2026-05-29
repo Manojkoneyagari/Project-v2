@@ -70,7 +70,7 @@ echo -e " ${Y} Proceeding with Nodejs Installation ${N}"
 
     echo " Directory not exists, creating directory and downloading code"
     sudo mkdir /app
-    sudo curl -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
+    sudo curl -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
     cd /app 
     sudo unzip /tmp/$appname.zip
     Validate $? "Created Directory and Downloaded code"
