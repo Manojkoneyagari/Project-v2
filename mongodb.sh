@@ -1,6 +1,7 @@
 #!/bin/bash
 
-LOG_DIR=$(sudo mkdir -p /var/log/mongodb)
+sudo mkdir -p /var/log/mongodb
+LOG_DIR=/var/log/mongodb
 sudo chown -R ubuntu:ubuntu $LOG_DIR
 sudo chmod -R 755 $LOG_DIR
 LOGFILE="$LOG_DIR/$0.log"
@@ -18,6 +19,7 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
     if [ $USERID -ne 0 ]; then
         echo " Please run the script with root user or sudo access" | tee -a $LOGFILE
+        exit 1;
     fi
 
 
