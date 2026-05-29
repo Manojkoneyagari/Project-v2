@@ -63,6 +63,8 @@ sudo apt update -y &>> $LOGFILE
 sudo apt install -y redis &>> $LOGFILE
 Validate $? "Installing redis"
 
+sudo sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
+Validate $? "Changes in systemdfile to allow all traffic and protected no" 
 
 sudo systemctl enable redis-server
 sudo systemctl start redis-server
