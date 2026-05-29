@@ -7,8 +7,8 @@ N="\e[0m"
 
 
 
-sudo mkdir -p /var/log/mongodb
-LOG_DIR=/var/log/mongodb
+sudo mkdir -p /var/log/roboshop
+LOG_DIR=/var/log/roboshop
 sudo chown -R ubuntu:ubuntu $LOG_DIR
 sudo chmod -R 755 $LOG_DIR
 SCRIPT_NAME=$(basename "$0")
@@ -49,7 +49,7 @@ echo "deb [ arch=amd64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] ht
 sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list &>> $LOGFILE
 Validate $? "Adding repository"
 
-sudo apt update -y
+sudo apt update -y &>> $LOGFILE
 sudo apt install -y mongodb-org &>> $LOGFILE
 Validate $? "Updating and installing mongodb application"
 
