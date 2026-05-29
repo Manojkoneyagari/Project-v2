@@ -12,7 +12,7 @@ LOG_DIR=/var/log/mongodb
 sudo chown -R ubuntu:ubuntu $LOG_DIR
 sudo chmod -R 755 $LOG_DIR
 SCRIPT_NAME=$(basename "$0")
-echo -e "${Y}....$SCRIPT_NAME {N}"
+echo -e "${Y}....$SCRIPT_NAME ${N}"
 LOGFILE="$LOG_DIR/${SCRIPT_NAME}.log"
 
 
