@@ -87,6 +87,7 @@ echo -e " ${Y} Proceeding with Mongodb Installation ${N}"
     sudo tee /etc/apt/sources.list.d/mongodb-org-7.0.list &>> $LOGFILE
     Validate $? "Adding repository"
 
+    sudo apt update -y &>> $LOGFILE
     sudo apt install -y mongodb-mongosh
     Validate $? "Installing mongodb client"
 
