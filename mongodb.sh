@@ -36,8 +36,7 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
 #Import key
 curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
-sudo gpg -o /usr/share/keyrings/mongodb-server-7.0.gpg \
---dearmor &>> $LOGFILE
+sudo gpg --dearmor -o /usr/share/keyrings/mongodb-server-7.0.gpg &>> $LOGFILE
 Validate $? "Adding mongodb gpg keys"
 
 #adding repo
