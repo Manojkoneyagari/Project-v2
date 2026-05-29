@@ -1,5 +1,12 @@
 #!/bin/bash
 
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+
+
+
 sudo mkdir -p /var/log/mongodb
 LOG_DIR=/var/log/mongodb
 sudo chown -R ubuntu:ubuntu $LOG_DIR
@@ -11,10 +18,6 @@ LOGFILE="$LOG_DIR/${SCRIPT_NAME}.log"
 
 USERID=$(id -u)
 
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[0m"
 
 Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
