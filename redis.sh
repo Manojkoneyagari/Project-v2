@@ -50,10 +50,15 @@ sudo apt update -y &>> $LOGFILE
 sudo apt install -y lsb-release curl gpg &>> $LOGFILE
 Validate $? "Installing updates"
 
+ if [ -f /usr/share/keyrings/redis-archive-keyring.gpg ]; then
+        echo "File already exists"
+    else
+        curl -fsSL https://packages.redis.io/gpg | \
+        sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg &>> $LOGFILE
+        Validate $? "Adding keys"
+    fi
 
-curl -fsSL https://packages.redis.io/gpg | \
-sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg &>> $LOGFILE
-Validate $? "Adding keys"
+
 
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | \
 sudo tee /etc/apt/sources.list.d/redis.list &>> $LOGFILE
@@ -63,9 +68,16 @@ sudo apt update -y &>> $LOGFILE
 sudo apt install -y redis &>> $LOGFILE
 Validate $? "Installing redis"
 
-sudo sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
-Validate $? "Changes in systemdfile to allow all traffic and protected no" 
-
 sudo systemctl enable redis-server
 sudo systemctl start redis-server
 Validate $? "Starting and enabling redis"
+
+sudo sed -i -e 's/127.0.0.1/0.0.0.0/g' -e '/protected-mode/ c protected-mode no' /etc/redis/redis.conf
+Validate $? "Changes in systemdfile to allow all traffic and protected no" 
+
+
+sudo systemctl daemon-reload
+sudo systemctl restart redis-server
+Validate $? "restarting redis"
+
+
