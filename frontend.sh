@@ -57,7 +57,7 @@ Validate $? "Adding nginx repo"
 
 
 sudo apt update -y &>> $LOGFILE
-sudo apt install -y nginx &>> $LOGFILE
+sudo apt install -y nginx=1.24.* &>> $LOGFILE
 Validate $? "Installing nginx 1.24 version"
 
 
