@@ -63,7 +63,7 @@ cd /app
 
 sudo mkdir /app
 sudo curl -L -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
-sudo cd /app 
+cd /app 
 unzip /tmp/$appname.zip
 cd /app 
 Validate $? "Created Directory and Downloaded code"
