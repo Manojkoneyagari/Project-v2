@@ -42,11 +42,11 @@ sudo apt install curl gnupg apt-transport-https -y &>> $LOGFILE
 Validate $? "Installing updates"
 
 
-curl -1sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA' \
+curl -sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA' \
 | sudo gpg --dearmor -o /usr/share/keyrings/com.rabbitmq.team.gpg
-curl -1sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/9F4587F226208342F0AD1D45ABF5BD827BD9BF62' \
+curl -sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/9F4587F226208342F0AD1D45ABF5BD827BD9BF62' \
 | sudo gpg --dearmor -o /usr/share/keyrings/net.launchpad.ppa.rabbitmq.erlang.gpg
-curl -1sLf 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.key' \
+curl -sLf 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.key' \
 | sudo gpg --dearmor -o /usr/share/keyrings/io.cloudsmith.rabbitmq.gpg
 Validate $? "Adding keys for repo"
 
