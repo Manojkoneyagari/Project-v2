@@ -46,7 +46,7 @@ sudo systemctl enable mysql
 sudo systemctl start mysql
 Validate $? "Starting and enabling mysql service"
 
-sudo mysql -e “ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Manoj@123';”
+sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY 'Manoj@123';"
 sudo mysql -e "CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED BY 'Manoj@123';"
 sudo mysql -e " GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;" 
 sudo mysql -e "FLUSH PRIVILEGES;"
