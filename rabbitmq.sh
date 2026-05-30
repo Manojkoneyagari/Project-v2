@@ -38,36 +38,9 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
 
 sudo apt update -y &>> $LOGFILE
-sudo apt install curl gnupg apt-transport-https -y &>> $LOGFILE
-Validate $? "Installing updates"
-
-
-curl -sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/0A9AF2115F4687BD29803A206B73A36E6026DFCA' \
-| sudo gpg --dearmor -o /usr/share/keyrings/com.rabbitmq.team.gpg
-curl -sLf 'https://keys.openpgp.org/vks/v1/by-fingerprint/9F4587F226208342F0AD1D45ABF5BD827BD9BF62' \
-| sudo gpg --dearmor -o /usr/share/keyrings/net.launchpad.ppa.rabbitmq.erlang.gpg
-curl -sLf 'https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/gpg.key' \
-| sudo gpg --dearmor -o /usr/share/keyrings/io.cloudsmith.rabbitmq.gpg
-Validate $? "Adding keys for repo"
-
-
-cat <<EOF | sudo tee /etc/apt/sources.list.d/rabbitmq.list
-deb [signed-by=/usr/share/keyrings/net.launchpad.ppa.rabbitmq.erlang.gpg] https://ppa1.novemberain.com/erlang/ubuntu jammy main
-deb-src [signed-by=/usr/share/keyrings/net.launchpad.ppa.rabbitmq.erlang.gpg] https://ppa1.novemberain.com/erlang/ubuntu jammy main
-
-deb [signed-by=/usr/share/keyrings/io.cloudsmith.rabbitmq.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main
-deb-src [signed-by=/usr/share/keyrings/io.cloudsmith.rabbitmq.gpg] https://dl.cloudsmith.io/public/rabbitmq/rabbitmq-server/deb/ubuntu jammy main
-EOF
-Validate $? "Adding repo"
-
-
+sudo apt install rabbitmq-server -y &>> $LOGFILE
 sudo apt update -y &>> $LOGFILE
-sudo apt install erlang-base erlang-asn1 erlang-crypto erlang-eldap \
-erlang-ftp erlang-inets erlang-mnesia erlang-os-mon erlang-parsetools \
-erlang-public-key erlang-runtime-tools erlang-snmp erlang-ssl \
-erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl rabbitmq-server -y
-Validate $? "Install erlang and rabbitmq"
-
+Validate $? "Installing updates and rabbitmq"
 
 sudo systemctl enable rabbitmq-server
 sudo systemctl start rabbitmq-server
