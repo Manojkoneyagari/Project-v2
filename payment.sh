@@ -74,8 +74,8 @@ cd /app
 unzip /tmp/$appname.zip
 Validate $? "Downloading code"
 
-sudo pip3 install -r requirements.txt --break-system-packages &>> $LOGFILE
-Validate $? "Installing dependencies"
+sudo pip3 install -r requirements.txt --break-system-packages --ignore-installed typing_extensions &>> $LOGFILE
+Validate $? "Installing dependencies and ignroing typing extensions"
 
 cp $SCRIPT_DIR/$appname.service /etc/systemd/system/$appname.service
 Validate $? "Creating Systemctl service"
