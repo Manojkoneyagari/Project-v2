@@ -70,11 +70,11 @@ sudo unzip /tmp/frontend.zip
 Validate $? "Downloading default html webpage"
 
 
-cp $SCRIPT_DIR/nginx.conf /etc/nginx/sites-available/roboshop.conf
+cp $SCRIPT_DIR/nginx.conf /etc/nginx/sites-available/roboshop
 Validate $? "Creating new config file instead of disturbing the original config"
 
 sudo rm -f /etc/nginx/sites-enabled/default
-sudo ln -s /etc/nginx/sites-available/roboshop /etc/nginx/sites-enabled/roboshop
+sudo ln -s /etc/nginx/sites-available/roboshop.conf /etc/nginx/sites-enabled/roboshop
 Validate $? "removing default link, relinking for our config file"
 
 sudo systemctl restart nginx
