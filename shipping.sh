@@ -48,9 +48,11 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 echo -e " ${Y} Proceeding with Java Installation ${N}" 
 
 sudo apt update -y &>> $LOGFILE
-sudo install maven -y &>> $LOGFILE
 sudo apt install unzip &>> $LOGFILE
-Validate $? "Installing updates and maven, unzip"
+Validate $? "Installing updates and  unzip"
+
+sudo apt install maven -y &>> $LOGFILE
+Validate $? "Installing maven "
 
 cd /app
         if [ $? -eq 0 ]; then
@@ -61,11 +63,12 @@ cd /app
 
  echo " Directory not exists, creating directory and downloading code"
 
-sudo mkdir /app
+sudo mkdir -p /app
 sudo curl -L -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
 cd /app 
 unzip /tmp/$appname.zip
 cd /app 
+pwd
 Validate $? "Created Directory and Downloaded code"
 
 
