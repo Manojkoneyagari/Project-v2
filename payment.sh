@@ -47,15 +47,15 @@ Timestamp=$(date "+%Y-%m-%d %H:%M:%S")
 
 
 
-sudo apt update -y $LOG_DIR
-sudo apt install unzip -y
+sudo apt update -y &>> $LOGFILE
+sudo apt install unzip -y &>> $LOGFILE
 Validate $? "Installing updates and unzip" 
 
-sudo apt install python3 gcc python3-dev -y $LOG_DIR
+sudo apt install python3 gcc python3-dev -y &>> $LOGFILE
 Validate $? "Installing python"
 
 
-sudo apt install python3-pip -y $LOG_DIR
+sudo apt install python3-pip -y &>> $LOGFILE
 Validate $? "Installing pip3"
 
  cd /app
@@ -74,7 +74,7 @@ cd /app
 unzip /tmp/$appname.zip
 Validate $? "Downloading code"
 
-sudo pip3 install -r requirements.txt $LOG_DIR
+sudo pip3 install -r requirements.txt &>> $LOGFILE
 Validate $? "Installing dependencies"
 
 cp $SCRIPT_DIR/$appname.service /etc/systemd/system/$appname.service
