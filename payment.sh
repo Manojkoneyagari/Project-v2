@@ -74,7 +74,7 @@ cd /app
 unzip /tmp/$appname.zip
 Validate $? "Downloading code"
 
-sudo pip3 install -r requirements.txt &>> $LOGFILE
+sudo pip3 install -r requirements.txt --break-system-packages &>> $LOGFILE
 Validate $? "Installing dependencies"
 
 cp $SCRIPT_DIR/$appname.service /etc/systemd/system/$appname.service
