@@ -1,0 +1,20 @@
+[Unit]
+Description=Payment Service
+[Service]
+User=root
+WorkingDirectory=/app
+// highlight-start
+Environment=CART_HOST=cart.manojkoney.store
+Environment=CART_PORT=8080
+Environment=USER_HOST=user.manojkoney.store
+Environment=USER_PORT=8080
+Environment=AMQP_HOST=rabbitmq.manojkoney.store
+// highlight-end
+Environment=AMQP_USER=roboshop
+Environment=AMQP_PASS=roboshop@123
+ExecStart=/usr/local/bin/uwsgi --ini payment.ini
+ExecStop=/bin/kill -9 $MAINPID
+SyslogIdentifier=payment
+
+[Install]
+WantedBy=multi-user.target
