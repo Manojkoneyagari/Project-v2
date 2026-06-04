@@ -64,7 +64,7 @@ cd /app
  echo " Directory not exists, creating directory and downloading code"
 
 sudo mkdir -p /app
-sudo curl -L -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip 
+sudo curl -L -o /tmp/$appname.zip https://roboshop-artifacts.s3.amazonaws.com/$appname-v3.zip &>> $LOGFILE
 cd /app 
 unzip /tmp/$appname.zip
 cd /app 
@@ -89,7 +89,7 @@ Validate $? "Reload and start the shipping service"
 
 echo -e " ${Y} Proceeding with mysql client Installation ${N}"
 
-sudo apt install mysql-client -y
+sudo apt install mysql-client -y &>> $LOGFILE
 Validate $? "Installing mysqlclient"
 
 sudo mysql -h mysql.manojkoney.store -uroot -pManoj@123 < /app/db/schema.sql
@@ -97,6 +97,7 @@ sudo mysql -h mysql.manojkoney.store -uroot -pManoj@123 < /app/db/app-user.sql
 sudo mysql -h mysql.manojkoney.store -uroot -pManoj@123 < /app/db/master-data.sql
 Validate $? "Uploading schema into mysql db"
 
+sudo systemctl daemon-reload
 sudo systemctl restart $appname
 Validate $? "restart the shipping service"
 
