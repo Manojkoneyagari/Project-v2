@@ -12,5 +12,3 @@ SyslogIdentifier=user
 
 [Install]
 WantedBy=multi-user.target
-
-EOF
